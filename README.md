@@ -35,7 +35,7 @@ Blank Space for you to think...
 - Allows access only to whitelisted topic IDs
 - Displays a friendly restriction message for non-whitelisted pages
 - Shows links to allowed topics with their titles
-- Handles dynamic URL changes
+- Attempts to close the tab after 3 seconds
 
 ## Usage
 1. Install Tampermonkey browser extension

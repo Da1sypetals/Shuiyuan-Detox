@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Restrict Shuiyuan SJTU Access by Topic Numbers
 // @namespace    http://tampermonkey.net/
-// @version      1.5
-// @description  Restrict access to only specific topics on shuiyuan.sjtu.edu.cn, replace other content with a learning hint, and display titles of allowed topics. Dynamically handles URL changes. URLs containing an allowed topic number are considered available.
+// @version      1.7
+// @description  Restrict access to only specific topics on shuiyuan.sjtu.edu.cn, replace other content with a learning hint, and display titles of allowed topics. Dynamically handles URL changes. URLs containing an allowed topic number are considered available. Closes the tab after 3 seconds if the page is forbidden.
 // @author       Your Name
 // @match        https://shuiyuan.sjtu.edu.cn/*
 // @grant        GM_xmlhttpRequest
@@ -36,7 +36,7 @@
     }
 
     // Function to generate the forbidden page content
-    function generateForbiddenPage(allowedTopicsWithTitles = []) {
+    function generateForbiddenPage(allowedTopicsWithTitles = [], countdown) {
         const allowedList = allowedTopicsWithTitles.map(result => `<li><a href="https://shuiyuan.sjtu.edu.cn/t/topic/${result.topic}">${result.title}</a></li>`).join('');
         return `
             <div style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif;">
@@ -46,6 +46,7 @@
                 <ul style="list-style-type: none; padding: 0;">
                     ${allowedList}
                 </ul>` : `<p>Error fetching allowed topics. Please try again later.</p>`}
+                <p>Closing tab in ${countdown} seconds...</p>
             </div>
         `;
     }
@@ -55,14 +56,34 @@
         return allowedTopics.some(topic => currentURL.includes(`/t/topic/${topic}`));
     }
 
-    // Function to display the forbidden page
+    // Function to block the page and close the tab
+    function block() {
+        let current = window.location.href;
+        window.history.back(); // Attempt to go back (if it's opened in a tab with no tab history)
+        if (window.location.href === current) { // If it's still there
+            window.close(); // Attempt to close the tab
+            if (window.location.href === current) { // If it's still there (if it's the only tab)
+                window.location.href = "about:blank"; // Redirect to a blank page
+            }
+        }
+    }
+
+    // Function to display the forbidden page and start the countdown
     function displayForbiddenPage() {
         Promise.all(allowedTopics.map(topic => {
             const url = `https://shuiyuan.sjtu.edu.cn/t/topic/${topic}`;
             return fetchTitle(url).then(title => ({ topic, title }));
         }))
             .then(results => {
-                document.body.innerHTML = generateForbiddenPage(results);
+                let countdown = 3;
+                const interval = setInterval(() => {
+                    document.body.innerHTML = generateForbiddenPage(results, countdown);
+                    countdown--;
+                    if (countdown < 0) {
+                        clearInterval(interval);
+                        block(); // Call the block function to close the tab or redirect
+                    }
+                }, 1000);
             })
             .catch(error => {
                 console.error("Error fetching titles:", error);
