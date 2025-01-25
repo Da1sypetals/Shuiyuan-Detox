@@ -8,7 +8,7 @@ A Tampermonkey userscript that restricts access to specific topics on shuiyuan.s
 
 
 # Sins of Shuiyuan
-- Browsing Shuiyuan has made my GPA drop 20%.
+- Browsing Shuiyuan has made my GPA rank drop 20%.
 - Browsing Shuiyuan has made me overly anxious on love&relationship topics.
 
 ```
@@ -45,4 +45,4 @@ Blank Space for you to think...
 
 ## Requirements
 - Tampermonkey browser extension
-- Access to shuiyuan.sjtu.edu.cn : You need a Jaccount to access the forum.
+- Access to shuiyuan.sjtu.edu.cn : You need a Jaccount to access the forum. If you don't have one, don't even try. Stepping into the forum is like drowning into hell.
