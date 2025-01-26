@@ -4,6 +4,12 @@
 - **[Shuiyuan Black White List](#shuiyuan-bwlist)**
 
 
+# Sins of Shuiyuan
+- Browsing Shuiyuan has made my GPA rank drop 20%.
+- Browsing Shuiyuan has made me overly anxious on love&relationship topics.
+- Browsing Shuiyuan has cost me an enormous amount of time.
+
+
 # SJTU Shuiyuan Detox
 
 A Tampermonkey userscript that restricts access to specific topics on shuiyuan.sjtu.edu.cn (SJTU's discussion forum).
@@ -13,9 +19,6 @@ A Tampermonkey userscript that restricts access to specific topics on shuiyuan.s
 ## 2. You should **Think Twice** before you add a topic ID: Is it worth to waste your time on it?
 
 
-# Sins of Shuiyuan
-- Browsing Shuiyuan has made my GPA rank drop 20%.
-- Browsing Shuiyuan has made me overly anxious on love&relationship topics.
 
 ```
 Blank Space for you to think...
