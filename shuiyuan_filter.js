@@ -13,15 +13,15 @@
 
     // ---------------------------------------------- Configurations ------------------------------------------------
     // Define keyword lists
-    // Comment keywords
+    // #### Comment keywords
     const postStreamKeywords = ['学不完', '喝水', 'keyword3']; // Add your keywords here
-    // Topic post keywords
-    const topicListBodyKeywords = ['学不完', '公开课', '日本', "异地", "机场", "新用户", "xhs", "deepseek", "帅哥", "情感", "进水", "知性感性"]; // Add your keywords here
-    const tags = ["性", "pride"]; // Add your keywords here
+    // #### Topic post keywords
+    const topicListBodyKeywords = ['学不完', "异地", "新用户", "xhs", "帅哥", "情感", "知性感性", "日常"]; // Add your keywords here
+    const tags = ["性", "pride", "涉政", "军事", "中国"]; // Add your keywords here
 
-    // Define usernames to filter
-    // const blockedUsernames = ['whisper_my_name', 'kubectl']; // Add usernames to block here
+    // #### Define usernames to filter
     const blockedUsernames = []; // Add usernames to block here
+    // const blockedUsernames = ['whisper_my_name', 'kubectl']; // Add usernames to block here
     // ----------------------------------------------------------------------------------------------------------------
 
     // Transform tags into /tag/X and tag-X formats
