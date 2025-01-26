@@ -14,7 +14,7 @@
     // ---------------------------------------------- Configurations ------------------------------------------------
     // Define keyword lists
     // #### Comment keywords (blacklist)
-    const postStreamKeywords = ['学不完', "野战", "sex", "npy", "爱情", "前男友", "前女友", "男朋友", "女朋友", "男友", "女友",
+    const postStreamKeywords = ["野战", "sex", "npy", "爱情", "前男友", "前女友", "男朋友", "女朋友", "男友", "女友",
         "炮友", "做爱", "渣男", "渣女", "怀孕", "八卦",]; // Add your keywords here
 
     // #### Topic post keywords (whitelist and blacklist)
@@ -31,7 +31,7 @@
     const useBlackWhiteList = "black"; // Set to "black" to use blacklist mode for topicListBody, default is whitelist
 
     // #### Define tag-based blacklist
-    const tagBlacklist = ["性", "性别议题"]; // Add tags to block here
+    const tagBlacklist = ["性", "性别议题", "找搭子",]; // Add tags to block here
     // const tagBlacklist = ['tag1', 'tag2']; // Example tags to block
     // ----------------------------------------------------------------------------------------------------------------
 
