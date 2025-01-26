@@ -20,7 +20,8 @@
 
     // #### Topic post keywords (whitelist and blacklist)
     const topicListBodyKeywordsWhitelist = ["数码", "科技", "科研", "硬件"]; // Whitelist keywords
-    const topicListBodyKeywordsBlacklist = ['学不完', "异地", "新用户", "xhs", "美女", "帅哥", "情感", "知性感性", "日常", "深度讨论", "NSFW", "二刺猿", "二次元", "体育赛事",
+    const topicListBodyKeywordsBlacklist = ['学不完', "异地", "新用户", "xhs", "美女",
+        "帅哥", "情感", "知性感性", "日常", "深度讨论", "NSFW", "二刺猿", "二次元", "体育赛事",
         "游戏", "日记", "占卜", "绩点", "成绩", "考研", "发疯", "小仙女", "楠楠", "相约鹊桥", "交友", "八卦",
         "轶事", "胴体",]; // Blacklist keywords
 
