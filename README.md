@@ -67,5 +67,5 @@ This userscript filters content on `shuiyuan.sjtu.edu.cn` based on predefined ke
 
 **Usage:**
 1. Install a userscript manager like Tampermonkey.
-2. Add this script and configure the `postStreamKeywords`, `topicListBodyKeywords`, and `blockedUsernames` arrays as needed.
+2. Add this script and configure the `postStreamKeywords`, `topicListBodyKeywords`, `tags`, and `blockedUsernames` arrays as needed.
 3. Navigate to `shuiyuan.sjtu.edu.cn` to see the filters in action.
