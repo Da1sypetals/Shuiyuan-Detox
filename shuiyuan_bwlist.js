@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SJTU Shuiyuan Content Filter
+// @name         Shuiyuan BWList
 // @namespace    http://tampermonkey.net/
 // @version      0.6
 // @description  Filter content on shuiyuan.sjtu.edu.cn based on keywords and usernames
@@ -13,38 +13,48 @@
 
     // ---------------------------------------------- Configurations ------------------------------------------------
     // Define keyword lists
-    // #### Comment keywords
-    const postStreamKeywords = ['学不完', '喝水', 'keyword3']; // Add your keywords here
-    // #### Topic post keywords
-    const topicListBodyKeywords = ['学不完', "异地", "新用户", "xhs", "帅哥", "情感", "知性感性", "日常"]; // Add your keywords here
-    const tags = ["性", "pride", "涉政", "军事", "中国"]; // Add your keywords here
+    // #### Comment keywords (blacklist)
+    const postStreamKeywords = ['学不完']; // Add your keywords here
 
-    // #### Define usernames to filter
+    // #### Topic post keywords (whitelist and blacklist)
+    const topicListBodyKeywordsWhitelist = []; // Whitelist keywords
+    const topicListBodyKeywordsBlacklist = ['学不完', "异地", "新用户", "xhs", "美女", "帅哥", "情感", "知性感性", "日常", "深度讨论", "NSFW", "二刺猿", "二次元", "体育赛事",
+                                  "游戏", "日记", "占卜", "绩点", "成绩", "考研"  ]; // Blacklist keywords
+
+    // #### Define usernames to filter (blacklist)
     const blockedUsernames = []; // Add usernames to block here
     // const blockedUsernames = ['whisper_my_name', 'kubectl']; // Add usernames to block here
+
+    // #### Select blacklist or whitelist mode for topicListBody
+    const useBlackWhiteList = "black"; // Set to "black" to use blacklist mode for topicListBody, default is whitelist
     // ----------------------------------------------------------------------------------------------------------------
 
-    // Transform tags into /tag/X and tag-X formats
-    const transformedTags = tags.flatMap(tag => [`/tag/${tag}`, `tag-${tag}`]);
+    // Transform blacklist tags into /tag/X and tag-X formats
+    const transformedTags = topicListBodyKeywordsBlacklist.flatMap(tag => [`/tag/${tag}`, `tag-${tag}`]);
 
-    // Append transformed tags to topicListBodyKeywords
-    topicListBodyKeywords.push(...transformedTags);
-
-
-
+    // Append transformed tags to topicListBodyKeywordsBlacklist
+    topicListBodyKeywordsBlacklist.push(...transformedTags);
 
     // Function to check and remove elements based on keywords (case-insensitive for English)
-    function filterElements(container, childSelector, keywords) {
+    function filterElements(container, childSelector, keywords, isWhitelist = false) {
         const children = container.querySelectorAll(childSelector);
         children.forEach(child => {
             const childHTML = child.outerHTML.toLowerCase(); // Convert to lowercase for case-insensitive matching
-            if (keywords.some(keyword => childHTML.includes(keyword.toLowerCase()))) {
-                child.remove();
+            if (isWhitelist) {
+                // Whitelist mode: only keep elements that contain at least one keyword
+                if (!keywords.some(keyword => childHTML.includes(keyword.toLowerCase()))) {
+                    child.remove();
+                }
+            } else {
+                // Blacklist mode: remove elements that contain any keyword
+                if (keywords.some(keyword => childHTML.includes(keyword.toLowerCase()))) {
+                    child.remove();
+                }
             }
         });
     }
 
-    // Function to filter posts by blocked usernames
+    // Function to filter posts by blocked usernames (blacklist)
     function filterPostsByUsername(container) {
         const posts = container.querySelectorAll('article[aria-label]');
         posts.forEach(post => {
@@ -56,13 +66,13 @@
         });
     }
 
-    // Function to handle topic-title filtering and actions
+    // Function to handle topic-title filtering and actions (blacklist)
     function handleTopicTitle() {
         const topicTitleDiv = document.querySelector('#topic-title');
-        console.log(topicTitleDiv);
         if (topicTitleDiv) {
             const topicTitleHTML = topicTitleDiv.outerHTML.toLowerCase(); // Convert to lowercase for case-insensitive matching
-            if (topicListBodyKeywords.some(keyword => topicTitleHTML.includes(keyword.toLowerCase()))) {
+            // Blacklist mode: remove elements that contain any keyword
+            if (topicListBodyKeywordsBlacklist.some(keyword => topicTitleHTML.includes(keyword.toLowerCase()))) {
                 // Attempt to go back to the previous page
                 if (window.history.length > 1) {
                     window.history.back();
@@ -84,16 +94,24 @@
         const postStream = document.querySelector('.post-stream');
         const topicListBody = document.querySelector('.topic-list-body');
 
+        // Apply blacklist mode to postStream
         if (postStream) {
-            filterElements(postStream, 'div', postStreamKeywords); // Filter by keywords
-            filterPostsByUsername(postStream); // Filter by usernames
+            filterElements(postStream, 'div', postStreamKeywords, false); // Blacklist mode
+            filterPostsByUsername(postStream); // Filter by usernames (blacklist)
         }
 
+        // Apply whitelist or blacklist mode to topicListBody based on useBlackWhiteList
         if (topicListBody) {
-            filterElements(topicListBody, 'tr', topicListBodyKeywords); // Filter by keywords
+            if (useBlackWhiteList === "black") {
+                // Blacklist mode: remove elements that contain any keyword
+                filterElements(topicListBody, 'tr', topicListBodyKeywordsBlacklist, false);
+            } else {
+                // Whitelist mode: only keep elements that contain at least one keyword
+                filterElements(topicListBody, 'tr', topicListBodyKeywordsWhitelist, true);
+            }
         }
 
-        handleTopicTitle(); // Handle topic-title filtering and actions
+        handleTopicTitle(); // Handle topic-title filtering and actions (blacklist)
     }
 
     // Function to observe DOM changes and reapply filters

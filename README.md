@@ -1,7 +1,7 @@
 # SJTU Shuiyuan Detox Utils
 
-- **[SJTU Shuiyuan Detox](#sjtu-shuiyuan-detox)**
-- **[SJTU Shuiyuan Content Filter](#sjtu-shuiyuan-content-filter)**
+- **[Shuiyuan Detox](#sjtu-shuiyuan-detox)**
+- **[Shuiyuan Black White List](#shuiyuan-bwlist)**
 
 
 # SJTU Shuiyuan Detox
@@ -55,17 +55,42 @@ Blank Space for you to think...
 
 ---
 
-# SJTU Shuiyuan Content Filter
 
-This userscript filters content on `shuiyuan.sjtu.edu.cn` based on predefined keywords and usernames. It dynamically removes posts and topics containing specified keywords or from blocked users. The script also handles topic titles by navigating away or closing the tab if a match is found. It continuously monitors the page for new content and reapplies filters as needed.
+# Shuiyuan BWList
 
-**Features:**
-- Keyword-based filtering for posts and topics.
-- Username-based blocking.
-- Dynamic content monitoring and filtering.
-- Automatic navigation or tab closure for unwanted topic titles.
+This Tampermonkey script filters content on `shuiyuan.sjtu.edu.cn` based on customizable keywords and usernames.
 
-**Usage:**
-1. Install a userscript manager like Tampermonkey.
-2. Add this script and configure the `postStreamKeywords`, `topicListBodyKeywords`, `tags`, and `blockedUsernames` arrays as needed.
-3. Navigate to `shuiyuan.sjtu.edu.cn` to see the filters in action.
+## Features
+
+- **Keyword Filtering**:
+  - Blacklist or whitelist keywords for posts and topics.
+  - Automatically removes or keeps content based on defined keywords.
+
+- **Username Blocking**:
+  - Blocks posts from specific usernames.
+
+- **Dynamic Filtering**:
+  - Applies filters to dynamically loaded content.
+
+- **Topic Title Handling**:
+  - Automatically navigates away or closes tabs for blacklisted topic titles.
+
+- **Customizable Modes**:
+  - Switch between blacklist or whitelist modes for topic filtering.
+
+## Configuration
+
+- Edit 
+  - `postStreamKeywords`, 
+  - `topicListBodyKeywordsWhitelist`, 
+  - `topicListBodyKeywordsBlacklist`, 
+  - `blockedUsernames`,
+
+  arrays to customize filtering.
+- Set `useBlackWhiteList` to `"black"` for blacklist mode or leave empty for whitelist mode (only for topics).
+
+## Usage
+
+1. Install the script in Tampermonkey.
+2. Customize the configuration arrays.
+3. Browse `shuiyuan.sjtu.edu.cn` with filtered content.
