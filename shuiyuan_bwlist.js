@@ -14,14 +14,15 @@
     // ---------------------------------------------- Configurations ------------------------------------------------
     // Define keyword lists
     // #### Comment keywords (blacklist)
-    const postStreamKeywords = ["野战", "sex", "npy", "爱情", "前男友", "前女友", "男朋友", "女朋友", "男友", "女友",
+    const postStreamKeywords = ["野战", "飞机杯", "紫薇", "自慰", "跳蛋", "小玩具",
+        "sex", "npy", "爱情", "前男友", "前女友", "男朋友", "女朋友", "男友", "女友",
         "炮友", "做爱", "渣男", "渣女", "怀孕", "八卦",]; // Add your keywords here
 
     // #### Topic post keywords (whitelist and blacklist)
     const topicListBodyKeywordsWhitelist = ["数码", "科技", "科研", "硬件"]; // Whitelist keywords
     const topicListBodyKeywordsBlacklist = ['学不完', "异地", "新用户", "xhs", "美女", "帅哥", "情感", "知性感性", "日常", "深度讨论", "NSFW", "二刺猿", "二次元", "体育赛事",
         "游戏", "日记", "占卜", "绩点", "成绩", "考研", "发疯", "小仙女", "楠楠", "相约鹊桥", "交友", "八卦",
-        "轶事",]; // Blacklist keywords
+        "轶事", "胴体",]; // Blacklist keywords
 
     // #### Define usernames to filter (blacklist)
     const blockedUsernames = []; // Add usernames to block here
@@ -31,7 +32,7 @@
     const useBlackWhiteList = "black"; // Set to "black" to use blacklist mode for topicListBody, default is whitelist
 
     // #### Define tag-based blacklist
-    const tagBlacklist = ["性", "性别议题", "找搭子",]; // Add tags to block here
+    const tagBlacklist = ["性", "性别议题", "找搭子", "涉政",]; // Add tags to block here
     // const tagBlacklist = ['tag1', 'tag2']; // Example tags to block
     // ----------------------------------------------------------------------------------------------------------------
 
