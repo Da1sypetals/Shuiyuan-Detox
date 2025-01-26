@@ -1,3 +1,9 @@
+# SJTU Shuiyuan Detox Utils
+
+- **[SJTU Shuiyuan Detox](#sjtu-shuiyuan-detox)**
+- **[SJTU Shuiyuan Content Filter](#sjtu-shuiyuan-content-filter)**
+
+
 # SJTU Shuiyuan Detox
 
 A Tampermonkey userscript that restricts access to specific topics on shuiyuan.sjtu.edu.cn (SJTU's discussion forum).
@@ -46,3 +52,20 @@ Blank Space for you to think...
 ## Requirements
 - Tampermonkey browser extension
 - Access to shuiyuan.sjtu.edu.cn : You need a Jaccount to access the forum. If you don't have one, don't even try. Stepping into the forum is like drowning into hell.
+
+---
+
+# SJTU Shuiyuan Content Filter
+
+This userscript filters content on `shuiyuan.sjtu.edu.cn` based on predefined keywords and usernames. It dynamically removes posts and topics containing specified keywords or from blocked users. The script also handles topic titles by navigating away or closing the tab if a match is found. It continuously monitors the page for new content and reapplies filters as needed.
+
+**Features:**
+- Keyword-based filtering for posts and topics.
+- Username-based blocking.
+- Dynamic content monitoring and filtering.
+- Automatic navigation or tab closure for unwanted topic titles.
+
+**Usage:**
+1. Install a userscript manager like Tampermonkey.
+2. Add this script and configure the `postStreamKeywords`, `topicListBodyKeywords`, and `blockedUsernames` arrays as needed.
+3. Navigate to `shuiyuan.sjtu.edu.cn` to see the filters in action.
