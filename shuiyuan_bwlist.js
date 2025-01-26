@@ -16,7 +16,7 @@
     // #### Comment keywords (blacklist)
     const postStreamKeywords = ["野战", "飞机杯", "紫薇", "自慰", "跳蛋", "小玩具",
         "sex", "npy", "爱情", "前男友", "前女友", "男朋友", "女朋友", "男友", "女友",
-        "炮友", "做爱", "渣男", "渣女", "怀孕", "八卦", "水源机器人", "焦虑",]; // Add your keywords here
+        "炮友", "做爱", "渣男", "渣女", "怀孕", "八卦", "水源机器人", "焦虑", "对象",]; // Add your keywords here
 
     // #### Topic post keywords (whitelist and blacklist)
     const topicListBodyKeywordsWhitelist = ["数码", "科技", "科研", "硬件"]; // Whitelist keywords
