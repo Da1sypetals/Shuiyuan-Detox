@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Shuiyuan BWList
 // @namespace    http://tampermonkey.net/
-// @version      0.6
-// @description  Filter content on shuiyuan.sjtu.edu.cn based on keywords and usernames
+// @version      0.7
+// @description  Filter content on shuiyuan.sjtu.edu.cn based on keywords, usernames, and tags
 // @author       You
 // @match        https://shuiyuan.sjtu.edu.cn/*
 // @grant        none
@@ -17,9 +17,9 @@
     const postStreamKeywords = ['学不完']; // Add your keywords here
 
     // #### Topic post keywords (whitelist and blacklist)
-    const topicListBodyKeywordsWhitelist = []; // Whitelist keywords
+    const topicListBodyKeywordsWhitelist = ["数码", "科技", "科研", "硬件"]; // Whitelist keywords
     const topicListBodyKeywordsBlacklist = ['学不完', "异地", "新用户", "xhs", "美女", "帅哥", "情感", "知性感性", "日常", "深度讨论", "NSFW", "二刺猿", "二次元", "体育赛事",
-                                  "游戏", "日记", "占卜", "绩点", "成绩", "考研"  ]; // Blacklist keywords
+        "游戏", "日记", "占卜", "绩点", "成绩", "考研", "发疯", "小仙女", "楠楠", "相约鹊桥", "交友"]; // Blacklist keywords
 
     // #### Define usernames to filter (blacklist)
     const blockedUsernames = []; // Add usernames to block here
@@ -27,29 +27,22 @@
 
     // #### Select blacklist or whitelist mode for topicListBody
     const useBlackWhiteList = "black"; // Set to "black" to use blacklist mode for topicListBody, default is whitelist
+
+    // #### Define tag-based blacklist
+    const tagBlacklist = ["性", "性别议题"]; // Add tags to block here
+    // const tagBlacklist = ['tag1', 'tag2']; // Example tags to block
     // ----------------------------------------------------------------------------------------------------------------
-
-    // Transform blacklist tags into /tag/X and tag-X formats
-    const transformedTags = topicListBodyKeywordsBlacklist.flatMap(tag => [`/tag/${tag}`, `tag-${tag}`]);
-
-    // Append transformed tags to topicListBodyKeywordsBlacklist
-    topicListBodyKeywordsBlacklist.push(...transformedTags);
 
     // Function to check and remove elements based on keywords (case-insensitive for English)
     function filterElements(container, childSelector, keywords, isWhitelist = false) {
         const children = container.querySelectorAll(childSelector);
+        const keywordPattern = new RegExp(keywords.map(k => k.toLowerCase()).join('|'), 'i');
+
         children.forEach(child => {
-            const childHTML = child.outerHTML.toLowerCase(); // Convert to lowercase for case-insensitive matching
-            if (isWhitelist) {
-                // Whitelist mode: only keep elements that contain at least one keyword
-                if (!keywords.some(keyword => childHTML.includes(keyword.toLowerCase()))) {
-                    child.remove();
-                }
-            } else {
-                // Blacklist mode: remove elements that contain any keyword
-                if (keywords.some(keyword => childHTML.includes(keyword.toLowerCase()))) {
-                    child.remove();
-                }
+            const childHTML = child.outerHTML.toLowerCase();
+            const shouldRemove = isWhitelist ? !keywordPattern.test(childHTML) : keywordPattern.test(childHTML);
+            if (shouldRemove) {
+                child.remove();
             }
         });
     }
@@ -89,6 +82,20 @@
         }
     }
 
+    // Function to filter topics by tags (blacklist)
+    function filterTopicsByTags(container) {
+        const topics = container.querySelectorAll('tr');
+        topics.forEach(topic => {
+            const tagLinks = topic.querySelectorAll('a.discourse-tag');
+            tagLinks.forEach(tagLink => {
+                const tagName = tagLink.textContent.trim();
+                if (tagBlacklist.includes(tagName)) {
+                    topic.remove(); // Remove the topic if it contains a blacklisted tag
+                }
+            });
+        });
+    }
+
     // Function to apply filters to the page
     function applyFilters() {
         const postStream = document.querySelector('.post-stream');
@@ -109,6 +116,9 @@
                 // Whitelist mode: only keep elements that contain at least one keyword
                 filterElements(topicListBody, 'tr', topicListBodyKeywordsWhitelist, true);
             }
+
+            // Always apply tag-based blacklist, regardless of whitelist/blacklist mode
+            filterTopicsByTags(topicListBody);
         }
 
         handleTopicTitle(); // Handle topic-title filtering and actions (blacklist)

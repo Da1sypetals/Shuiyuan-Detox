@@ -94,3 +94,7 @@ This Tampermonkey script filters content on `shuiyuan.sjtu.edu.cn` based on cust
 1. Install the script in Tampermonkey.
 2. Customize the configuration arrays.
 3. Browse `shuiyuan.sjtu.edu.cn` with filtered content.
+
+
+## Note
+Please read the configuration part of the script.
